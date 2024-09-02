@@ -28,5 +28,17 @@ class TestStringCalculator(unittest.TestCase):
             self.calculator.add("1,-2,3,-4")
         self.assertEqual(str(context.exception), "Negative numbers not allowed: -2, -4")
 
+    def test_ignore_numbers_greater_than_1000(self):
+        self.assertEqual(self.calculator.add("2,1001"), 2)
+
+    def test_custom_delimiter_of_any_length(self):
+        self.assertEqual(self.calculator.add("//[***]\n1***2***3"), 6)
+
+    def test_multiple_custom_delimiters(self):
+        self.assertEqual(self.calculator.add("//[*][%]\n1*2%3"), 6)
+
+    def test_multiple_custom_delimiters_with_length_longer_than_one_char(self):
+        self.assertEqual(self.calculator.add("//[***][%%%]\n1***2%%%3"), 6)
+
 if __name__ == "__main__":
     unittest.main()
